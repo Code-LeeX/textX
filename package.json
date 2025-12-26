@@ -1,0 +1,38 @@
+{
+  "name": "textx-editor",
+  "version": "1.0.0",
+  "description": "一款支持富文本编辑的文本编辑器，具备加密、主题、PDF导出等功能",
+  "private": true,
+  "workspaces": [
+    "server",
+    "client"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "dev:server": "cd server && npm run dev",
+    "dev:client": "cd client && npm run dev",
+    "build": "npm run build:client && npm run build:server",
+    "build:client": "cd client && npm run build",
+    "build:server": "cd server && npm run build",
+    "start": "cd server && npm run start",
+    "install:all": "npm install && cd server && npm install && cd ../client && npm install",
+    "clean": "rimraf node_modules server/node_modules client/node_modules"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "rimraf": "^5.0.5"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "author": "TextX Editor",
+  "license": "MIT",
+  "keywords": [
+    "text-editor",
+    "markdown",
+    "encryption",
+    "pdf-export",
+    "rich-text"
+  ]
+}

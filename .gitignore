@@ -1,0 +1,17 @@
+node_modules
+.idea
+dist
+/types
+/public
+.DS_Store
+.turbo
+.npm-packages-offline
+playwright-results
+playwright-report
+json-reports
+test-results
+junit-results.xml
+.pnpm-store
+.docker
+
+*storybook.log

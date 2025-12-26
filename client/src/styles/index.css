@@ -1,0 +1,255 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 自定义基础样式 */
+@layer base {
+  * {
+    box-sizing: border-box;
+    border-width: 0;
+    border-style: solid;
+    border-color: #e5e7eb;
+  }
+
+  body {
+    @apply bg-white text-gray-900;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  /* 选中文本样式 */
+  ::selection {
+    @apply bg-primary-100 text-primary-900;
+  }
+
+  /* 滚动条样式 */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-gray-100;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 rounded-md;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-400;
+  }
+
+  /* 暗色模式滚动条 */
+  .dark ::-webkit-scrollbar-track {
+    @apply bg-gray-800;
+  }
+
+  .dark ::-webkit-scrollbar-thumb {
+    @apply bg-gray-600;
+  }
+
+  .dark ::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-500;
+  }
+}
+
+/* 自定义组件样式 */
+@layer components {
+  /* 按钮组件 */
+  .btn {
+    @apply inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-white;
+  }
+
+  .btn-primary {
+    @apply btn bg-primary-500 text-white hover:bg-primary-600 active:bg-primary-700;
+  }
+
+  .btn-secondary {
+    @apply btn bg-gray-100 text-gray-900 hover:bg-gray-200 active:bg-gray-300;
+  }
+
+  .btn-ghost {
+    @apply btn hover:bg-gray-100 hover:text-gray-900;
+  }
+
+  .btn-icon {
+    @apply btn h-9 w-9 p-0;
+  }
+
+  /* 输入框组件 */
+  .input {
+    @apply flex h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  /* 卡片组件 */
+  .card {
+    @apply rounded-lg border border-gray-200 bg-white shadow-sm;
+  }
+
+  .card-header {
+    @apply flex flex-col space-y-1.5 p-6 pb-4;
+  }
+
+  .card-content {
+    @apply p-6 pt-0;
+  }
+
+  /* 编辑器特定样式 */
+  .editor-container {
+    @apply relative flex-1 overflow-hidden h-full;
+  }
+
+  .editor-textarea {
+    @apply w-full h-full resize-none border-none outline-none bg-transparent font-mono text-sm leading-relaxed;
+  }
+
+  .editor-preview {
+    @apply max-w-none overflow-y-auto overflow-x-hidden p-4 text-gray-900 leading-relaxed text-sm break-words;
+  }
+
+  /* Markdown样式 */
+  .markdown-body {
+    @apply text-gray-900 leading-relaxed break-words;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .markdown-body h1 {
+    @apply text-3xl font-bold mb-4 mt-6 text-gray-900 border-b border-gray-200 pb-2;
+  }
+
+  .markdown-body h2 {
+    @apply text-2xl font-semibold mb-3 mt-5 text-gray-900;
+  }
+
+  .markdown-body h3 {
+    @apply text-xl font-semibold mb-2 mt-4 text-gray-900;
+  }
+
+  .markdown-body h4 {
+    @apply text-lg font-medium mb-2 mt-3 text-gray-900;
+  }
+
+  .markdown-body p {
+    @apply text-gray-900 leading-relaxed break-words;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .markdown-body ul {
+    @apply list-disc list-inside mb-4 space-y-1;
+  }
+
+  .markdown-body ol {
+    @apply list-decimal list-inside mb-4 space-y-1;
+  }
+
+  .markdown-body li {
+    @apply text-gray-700;
+  }
+
+  .markdown-body blockquote {
+    @apply border-l-4 border-gray-300 pl-4 py-2 my-4 text-gray-600 bg-gray-50 rounded-r;
+  }
+
+  .markdown-body code {
+    @apply bg-gray-100 text-gray-800 px-1.5 py-0.5 rounded text-sm font-mono;
+  }
+
+  .markdown-body pre {
+    @apply bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto mb-4;
+  }
+
+  .markdown-body pre code {
+    @apply bg-transparent text-inherit px-0 py-0;
+  }
+
+  .markdown-body img {
+    @apply max-w-full h-auto rounded-lg shadow-sm my-4;
+  }
+
+  /* 加密模式样式 */
+  .encrypted-text {
+    @apply text-gray-500 font-mono tracking-wider;
+    filter: blur(2px);
+    user-select: none;
+  }
+
+  .encrypted-input {
+    @apply text-gray-500 font-mono;
+    filter: blur(1px);
+  }
+
+  /* 主题切换动画 */
+  .theme-transition {
+    @apply transition-colors duration-200 ease-in-out;
+  }
+
+  /* 工具栏样式 */
+  .toolbar {
+    @apply flex items-center space-x-2 p-2 border-b border-gray-200 bg-white;
+  }
+
+  .toolbar-group {
+    @apply flex items-center space-x-1 px-2 border-r border-gray-200 last:border-r-0;
+  }
+
+  /* 侧边栏样式 */
+  .sidebar {
+    @apply w-64 bg-gray-50 border-r border-gray-200 flex flex-col;
+  }
+
+  .sidebar-header {
+    @apply p-4 border-b border-gray-200 bg-white;
+  }
+
+  .sidebar-content {
+    @apply flex-1 overflow-y-auto p-2;
+  }
+
+  /* 目录样式 */
+  .toc {
+    @apply space-y-1;
+  }
+
+  .toc-item {
+    @apply block py-1 px-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded cursor-pointer transition-colors;
+  }
+
+  .toc-item.active {
+    @apply text-primary-600 bg-primary-50 font-medium;
+  }
+
+  .toc-item.level-1 {
+    @apply font-semibold;
+  }
+
+  .toc-item.level-2 {
+    @apply ml-4;
+  }
+
+  .toc-item.level-3 {
+    @apply ml-8;
+  }
+
+  /* 状态栏样式 */
+  .status-bar {
+    @apply flex items-center justify-between px-4 py-2 bg-gray-100 border-t border-gray-200 text-xs text-gray-600;
+  }
+}
+
+/* 工具类 */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}

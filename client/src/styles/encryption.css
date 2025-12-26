@@ -1,0 +1,169 @@
+/* 加密模式样式 */
+.encrypted-input {
+  font-family: monospace;
+  letter-spacing: 0.2em;
+  color: #6b7280;
+  caret-color: #3b82f6;
+}
+
+.encrypted-text {
+  filter: blur(1px);
+  user-select: none;
+  font-family: monospace;
+  letter-spacing: 0.1em;
+}
+
+.encrypted-preview {
+  font-family: monospace;
+  letter-spacing: 0.1em;
+  color: #6b7280;
+  filter: blur(2px);
+  user-select: none;
+  opacity: 0.7;
+}
+
+/* 最近输入文本显示 */
+.recent-text-indicator {
+  position: absolute;
+  top: 4rem;
+  left: 1rem;
+  background: linear-gradient(135deg, #fef3c7, #f59e0b);
+  color: #92400e;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  border: 1px solid #f59e0b;
+  z-index: 20;
+  animation: fadeInOut 0.3s ease-in-out;
+  max-width: 300px;
+  word-break: break-word;
+}
+
+.recent-text-indicator::before {
+  content: '🔒';
+  margin-right: 0.5rem;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 加密对话框样式 */
+.encryption-dialog {
+  backdrop-filter: blur(4px);
+}
+
+.encryption-dialog .modal-content {
+  border: 2px solid #e5e7eb;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+/* 密码强度指示器样式 */
+.password-strength-bar {
+  transition: all 0.3s ease;
+}
+
+.password-strength-weak {
+  background-color: #ef4444;
+}
+
+.password-strength-medium {
+  background-color: #f59e0b;
+}
+
+.password-strength-good {
+  background-color: #3b82f6;
+}
+
+.password-strength-strong {
+  background-color: #10b981;
+}
+
+/* 加密模式工具栏按钮高亮 */
+.encryption-mode-active {
+  background-color: #fef3c7 !important;
+  color: #92400e !important;
+  border-color: #f59e0b !important;
+}
+
+.encryption-mode-active:hover {
+  background-color: #fde68a !important;
+}
+
+/* 加密文档状态栏样式 */
+.encryption-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #f59e0b;
+  font-weight: 500;
+}
+
+.encryption-status::before {
+  content: '🔐';
+  font-size: 1rem;
+}
+
+/* 处理中动画 */
+.processing-overlay {
+  backdrop-filter: blur(2px);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.spinner {
+  border: 2px solid #e5e7eb;
+  border-top: 2px solid #3b82f6;
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .recent-text-indicator {
+    left: 0.5rem;
+    right: 0.5rem;
+    max-width: none;
+    font-size: 0.75rem;
+  }
+}
+
+/* 暗色主题适配 */
+.dark .encrypted-input {
+  color: #9ca3af;
+  caret-color: #60a5fa;
+}
+
+.dark .encrypted-preview {
+  color: #9ca3af;
+}
+
+.dark .recent-text-indicator {
+  background: linear-gradient(135deg, #451a03, #f59e0b);
+  color: #fbbf24;
+  border-color: #f59e0b;
+}
+
+.dark .encryption-dialog .modal-content {
+  background-color: #1f2937;
+  border-color: #374151;
+}
+
+.dark .processing-overlay {
+  background: rgba(31, 41, 55, 0.9);
+}

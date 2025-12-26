@@ -1,0 +1,336 @@
+/* Table of Contents 样式 */
+
+/* TOC 容器样式 */
+.toc-overlay {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 30;
+  max-width: 300px;
+  max-height: calc(100vh - 200px);
+}
+
+/* 响应式布局 */
+@media (max-width: 1200px) {
+  .toc-overlay {
+    position: fixed;
+    top: 80px;
+    right: 10px;
+    max-width: 280px;
+  }
+}
+
+@media (max-width: 768px) {
+  .toc-overlay {
+    top: 70px;
+    right: 5px;
+    left: 5px;
+    max-width: none;
+  }
+}
+
+/* TOC 高亮目标样式 */
+.toc-target-highlight {
+  background: linear-gradient(135deg, #fef3c7, #fbbf24) !important;
+  border-radius: 6px !important;
+  padding: 8px 12px !important;
+  margin: 4px 0 !important;
+  box-shadow: 0 2px 8px rgba(251, 191, 36, 0.3) !important;
+  transform: translateX(4px) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* 深色主题的高亮样式 */
+.dark .toc-target-highlight {
+  background: linear-gradient(135deg, #451a03, #f59e0b) !important;
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3) !important;
+}
+
+/* TOC 滚动动画 */
+.toc-scroll-animation {
+  scroll-behavior: smooth;
+}
+
+/* 预览容器标识 */
+.markdown-preview {
+  position: relative;
+}
+
+.markdown-preview[data-markdown-preview] {
+  scroll-behavior: smooth;
+}
+
+/* 标题锚点样式 */
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  position: relative;
+  scroll-margin-top: 20px;
+}
+
+/* 标题悬停时显示锚点 */
+.markdown-body h1:hover::before,
+.markdown-body h2:hover::before,
+.markdown-body h3:hover::before,
+.markdown-body h4:hover::before,
+.markdown-body h5:hover::before,
+.markdown-body h6:hover::before {
+  content: '#';
+  position: absolute;
+  left: -1.5em;
+  color: #6b7280;
+  font-weight: normal;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.dark .markdown-body h1:hover::before,
+.dark .markdown-body h2:hover::before,
+.dark .markdown-body h3:hover::before,
+.dark .markdown-body h4:hover::before,
+.dark .markdown-body h5:hover::before,
+.dark .markdown-body h6:hover::before {
+  color: #9ca3af;
+}
+
+/* TOC 进度指示器 */
+.toc-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: #e5e7eb;
+  z-index: 50;
+}
+
+.toc-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6, #06b6d4);
+  transition: width 0.3s ease;
+  border-radius: 0 2px 2px 0;
+}
+
+/* TOC 快捷导航 */
+.toc-navigation {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 40;
+}
+
+.toc-nav-btn {
+  width: 40px;
+  height: 40px;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.toc-nav-btn:hover {
+  background: #f3f4f6;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.toc-nav-btn:active {
+  transform: translateY(0);
+}
+
+.dark .toc-nav-btn {
+  background: #1f2937;
+  border-color: #374151;
+  color: #f9fafb;
+}
+
+.dark .toc-nav-btn:hover {
+  background: #374151;
+}
+
+/* TOC 迷你模式 */
+.toc-mini {
+  position: fixed;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  width: 4px;
+  background: #e5e7eb;
+  border-radius: 2px;
+  z-index: 35;
+  transition: width 0.2s;
+}
+
+.toc-mini:hover {
+  width: 200px;
+  background: white;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.toc-mini-item {
+  height: 3px;
+  background: #6b7280;
+  margin: 2px 0;
+  border-radius: 1px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.toc-mini-item.active {
+  background: #3b82f6;
+  height: 4px;
+}
+
+.toc-mini-item:hover {
+  background: #374151;
+  transform: scaleY(1.5);
+}
+
+/* TOC 键盘导航提示 */
+.toc-keyboard-hint {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  z-index: 45;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.toc-keyboard-hint.visible {
+  opacity: 1;
+}
+
+/* TOC 动画效果 */
+@keyframes tocSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes tocSlideOut {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+.toc-slide-in {
+  animation: tocSlideIn 0.3s ease-out;
+}
+
+.toc-slide-out {
+  animation: tocSlideOut 0.3s ease-in;
+}
+
+/* 工具栏中的TOC按钮活动状态 */
+.btn-icon.toc-active {
+  background-color: #dbeafe !important;
+  color: #1d4ed8 !important;
+}
+
+.dark .btn-icon.toc-active {
+  background-color: #1e40af !important;
+  color: #bfdbfe !important;
+}
+
+/* TOC 计数徽章 */
+.toc-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: #ef4444;
+  color: white;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+
+/* TOC 搜索高亮 */
+.toc-search-highlight {
+  background: #fef3c7;
+  color: #92400e;
+  border-radius: 2px;
+  padding: 1px 2px;
+}
+
+.dark .toc-search-highlight {
+  background: #451a03;
+  color: #fbbf24;
+}
+
+/* 打印时隐藏TOC */
+@media print {
+  .table-of-contents,
+  .toc-overlay,
+  .toc-navigation,
+  .toc-mini,
+  .toc-toggle-btn {
+    display: none !important;
+  }
+}
+
+/* 高对比度模式支持 */
+@media (prefers-contrast: high) {
+  .table-of-contents {
+    border: 2px solid currentColor;
+  }
+
+  .toc-link {
+    border: 1px solid transparent;
+  }
+
+  .toc-link:focus,
+  .toc-link.active {
+    border-color: currentColor;
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+}
+
+/* 减少动画偏好支持 */
+@media (prefers-reduced-motion: reduce) {
+  .toc-target-highlight,
+  .toc-nav-btn,
+  .toc-slide-in,
+  .toc-slide-out,
+  .toc-progress-bar {
+    transition: none;
+    animation: none;
+  }
+
+  .markdown-preview[data-markdown-preview] {
+    scroll-behavior: auto;
+  }
+}
