@@ -154,25 +154,6 @@ const SettingsPage = () => {
 
               <div className="card">
                 <div className="card-header">
-                  <h3 className="font-medium">语言设置</h3>
-                </div>
-                <div className="card-content">
-                  <label className="flex items-center justify-between">
-                    <span>界面语言</span>
-                    <select
-                      value={localSettings.language || 'zh-CN'}
-                      onChange={(e) => setLocalSettings(prev => ({ ...prev, language: e.target.value }))}
-                      className="input w-40"
-                    >
-                      <option value="zh-CN">简体中文</option>
-                      <option value="en-US">English</option>
-                    </select>
-                  </label>
-                </div>
-              </div>
-
-              <div className="card">
-                <div className="card-header">
                   <h3 className="font-medium">应用行为</h3>
                 </div>
                 <div className="card-content space-y-4">
@@ -264,25 +245,6 @@ const SettingsPage = () => {
                   <h3 className="font-medium">编辑器行为</h3>
                 </div>
                 <div className="card-content space-y-4">
-                  <label className="flex items-center justify-between">
-                    <span>显示行号</span>
-                    <input
-                      type="checkbox"
-                      checked={localSettings.show_line_numbers || false}
-                      onChange={(e) => setLocalSettings(prev => ({ ...prev, show_line_numbers: e.target.checked }))}
-                      className="form-checkbox"
-                    />
-                  </label>
-
-                  <label className="flex items-center justify-between">
-                    <span>自动换行</span>
-                    <input
-                      type="checkbox"
-                      checked={localSettings.word_wrap || false}
-                      onChange={(e) => setLocalSettings(prev => ({ ...prev, word_wrap: e.target.checked }))}
-                      className="form-checkbox"
-                    />
-                  </label>
 
                   <label className="flex items-center justify-between">
                     <span>同步滚动</span>

@@ -109,7 +109,8 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. 中文混排测试文�
       const response = await fetch('/api/fonts')
       if (response.ok) {
         const customFonts = await response.json()
-        setFonts([...presetFonts, ...customFonts])
+        const loadedCustomFonts = await fontLoader.loadFonts(customFonts.data);
+        setFonts([...presetFonts, ...loadedCustomFonts])
       } else {
         setFonts(presetFonts)
       }
@@ -123,10 +124,8 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. 中文混排测试文�
 
   // 初始化
   useEffect(() => {
-    if (isOpen) {
       loadFonts()
-    }
-  }, [isOpen, loadFonts])
+  }, [])
 
   // 应用字体设置
   const applyFontSettings = useCallback(() => {
@@ -171,7 +170,8 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. 中文混排测试文�
 
     const formData = new FormData()
     formData.append('font', customFontFile)
-
+    formData.append('name', customFontFile.name.split('.')[0])
+    formData.append('family', customFontFile.name.split('.')[0])
     try {
       const response = await fetch('/api/fonts/upload', {
         method: 'POST',
@@ -304,7 +304,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. 中文混排测试文�
             )}
 
             {/* 上传自定义字体 */}
-            <div className="mt-6 pt-4 border-t border-gray-200">
+            <div className="mt-6 pt-4 border-t border-gray-200" style={{height: 180}}>
               <h4 className="font-medium text-gray-700 mb-3 flex items-center">
                 <CloudArrowUpIcon className="w-4 h-4 mr-2" />
                 上传字体
@@ -479,3 +479,77 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. 中文混排测试文�
 }
 
 export default FontManager
+
+
+class FontLoader {
+  constructor() {
+    this.loadedFonts = new Map(); // 缓存已加载的字体
+  }
+
+  // 加载字体并返回字体家族名称
+  async loadFont(font) {
+    // 如果是预设字体，直接返回字体家族
+    if (font.type === 'web' || font.type === 'system') {
+      return font.family;
+    }
+    
+    // 如果是自定义字体，检查是否已加载
+    if (this.loadedFonts.has(font.id)) {
+      return this.loadedFonts.get(font.id);
+    }
+    
+    try {
+      // 为自定义字体生成唯一的字体家族名称
+      const fontFamily = `CustomFont-${font.id}`;
+      
+      // 加载字体文件
+      const fontUrl = `/api/fonts/${font.id}/file`;
+      const fontFace = new FontFace(
+        fontFamily,
+        `url(${fontUrl})`,
+        { style: 'normal', weight: '400' }
+      );
+      
+      // 等待字体加载
+      const loadedFont = await fontFace.load();
+      document.fonts.add(loadedFont);
+      
+      // 缓存已加载的字体
+      this.loadedFonts.set(font.id, fontFamily);
+      
+      return fontFamily;
+      
+    } catch (error) {
+      console.error('加载字体失败:', error);
+      // 如果加载失败，返回默认字体
+      return font.family || 'Inter, sans-serif';
+    }
+  }
+
+  // 批量加载字体
+  async loadFonts(fonts) {
+    const results = [];
+    for (const font of fonts) {
+      if (font.has_file) {
+        try {
+          const fontFamily = await this.loadFont(font);
+          results.push({ ...font, family: fontFamily });
+        } catch (error) {
+          console.error(`字体 ${font.name} 加载失败:`, error);
+          results.push(font);
+        }
+      } else {
+        results.push(font);
+      }
+    }
+    return results;
+  }
+
+  // 清理不再使用的字体
+  cleanup() {
+    // 这里可以添加字体清理逻辑
+    // 注意：浏览器中的 FontFace 一旦加载，就不能直接卸载
+  }
+}
+
+export const fontLoader = new FontLoader();

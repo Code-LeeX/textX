@@ -160,10 +160,11 @@ const MarkdownPreview = ({
     <div className="editor-preview">
       <div
         ref={previewRef}
-        className="markdown-body h-full overflow-y-auto p-4"
+        className="markdown-body overflow-y-auto p-4"
         style={{
           fontFamily: settings.font_family || 'Inter, sans-serif',
-          fontSize: `${settings.font_size || 14}px`
+          fontSize: `${settings.font_size || 14}px`,
+          height: `calc(100vh - 110px)`
         }}
         onScroll={settings.sync_scroll ? handleScroll : undefined}
         onClick={handleClick}

@@ -210,11 +210,7 @@ const MarkdownEditor = ({
           onSelect={handleSelectionChange}
           onKeyDown={handleKeyDown}
           onPaste={handlePaste}
-          className={`
-            editor-textarea
-            ${settings.word_wrap ? 'whitespace-pre-wrap' : 'whitespace-pre'}
-            ${settings.show_line_numbers ? 'pl-12' : 'pl-4'}
-          `}
+          className="editor-textarea pl-4 whitespace-pre-wrap"
           style={{
             fontFamily: settings.font_family || 'Inter, monospace',
             fontSize: `${settings.font_size || 14}px`,
@@ -227,19 +223,6 @@ const MarkdownEditor = ({
           autoCapitalize="off"
           data-gramm="false"
         />
-
-        {/* 行号显示 */}
-        {settings.show_line_numbers && (
-          <div className="absolute left-0 top-0 h-full w-10 bg-gray-50 border-r border-gray-200 overflow-hidden pointer-events-none">
-            <div className="py-4 px-2 text-xs text-gray-400 font-mono leading-relaxed">
-              {content.split('\n').map((_, index) => (
-                <div key={index} className="h-6">
-                  {index + 1}
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
       </div>
 
       {/* 图片上传器 */}

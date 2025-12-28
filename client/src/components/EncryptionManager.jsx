@@ -15,6 +15,7 @@ const EncryptionManager = ({
   description
 }) => {
   const [isProcessing, setIsProcessing] = useState(false)
+  const [iptV, setIptV] = useState()
 
   // 处理密码提交
   const handlePasswordSubmit = useCallback(async (password) => {
@@ -136,8 +137,8 @@ const EncryptionManager = ({
 
         <div className="p-6">
           <PasswordInput
-            value=""
-            onChange={() => {}} // PasswordInput 内部管理状态
+            value={iptV}
+            onChange={(v)=>{setIptV(v)}} // PasswordInput 内部管理状态
             onSubmit={handlePasswordSubmit}
             title={config.title}
             description={config.description}

@@ -102,7 +102,7 @@ const EditorPage = () => {
         } else {
           handleSaveDocument('normal', null, true)
         }
-      }, 2000) // 2秒后自动保存
+      }, 60000) // 60秒后自动保存
     }
   }, [currentDocument.content, currentDocument.filePath, currentDocument.isEncrypted, settings.auto_save])
 

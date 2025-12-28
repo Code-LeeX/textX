@@ -195,9 +195,6 @@ async function insertDefaultData() {
     { key: 'encryption_display_duration', value: '3', type: 'number', description: '加密模式下明文显示时长(秒)' },
     { key: 'default_view_mode', value: 'split', type: 'string', description: '默认显示模式' },
     { key: 'auto_save', value: 'true', type: 'boolean', description: '是否自动保存' },
-    { key: 'language', value: 'zh-CN', type: 'string', description: '界面语言' },
-    { key: 'show_line_numbers', value: 'true', type: 'boolean', description: '是否显示行号' },
-    { key: 'word_wrap', value: 'true', type: 'boolean', description: '是否自动换行' },
     { key: 'sync_scroll', value: 'true', type: 'boolean', description: '是否同步滚动' }
   ];
 

@@ -11,7 +11,7 @@ const storage = multer.memoryStorage();
 const upload = multer({
   storage,
   limits: {
-    fileSize: 5 * 1024 * 1024, // 5MB限制
+    fileSize: 10 * 1024 * 1024, // 10MB限制
   },
   fileFilter: (req, file, cb) => {
     // 允许的字体文件格式
@@ -66,7 +66,10 @@ router.get('/', async (req, res) => {
       created_at: font.created_at,
       updated_at: font.updated_at,
       has_file: Boolean(font.file_data || font.file_path)
-    }));
+    })).filter(font=>{
+      if(['Inter', 'Mono', 'Noto'].some(lj=>font.name.includes(lj))) return false;
+      return true;
+    });
 
     res.json({
       success: true,
@@ -232,6 +235,7 @@ router.post('/upload', upload.single('font'), async (req, res) => {
         message: '请选择字体文件'
       });
     }
+    console.log(req.body)
 
     const { name, family, size = 14 } = req.body;
 
@@ -247,20 +251,36 @@ router.post('/upload', upload.single('font'), async (req, res) => {
     // 检查字体名称是否已存在
     const existingFont = await new Promise((resolve, reject) => {
       db.get(
-        'SELECT id FROM fonts WHERE name = ?',
-        [name],
-        (err, row) => {
-          if (err) reject(err);
-          else resolve(row);
-        }
+      'SELECT id, file_path FROM fonts WHERE name = ?',
+      [name],
+      (err, row) => {
+        if (err) reject(err);
+        else resolve(row);
+      }
       );
     });
 
     if (existingFont) {
-      return res.status(400).json({
-        success: false,
-        message: '字体名称已存在'
+      // 删除已存在的字体记录
+      await new Promise((resolve, reject) => {
+      db.run(
+        'DELETE FROM fonts WHERE id = ?',
+        [existingFont.id],
+        function(err) {
+        if (err) reject(err);
+        else resolve(this);
+        }
+      );
       });
+
+      // 删除字体文件（如果存在）
+      if (existingFont.file_path) {
+      try {
+        await fs.unlink(existingFont.file_path);
+      } catch (error) {
+        console.warn('删除字体文件失败:', error.message);
+      }
+      }
     }
 
     // 保存字体到数据库
@@ -288,6 +308,7 @@ router.post('/upload', upload.single('font'), async (req, res) => {
         }
       );
     });
+    console.log(newFont)
 
     res.status(201).json({
       success: true,

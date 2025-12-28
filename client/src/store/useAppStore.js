@@ -27,8 +27,6 @@ const useAppStore = create(
         font_family: 'Inter',
         font_size: 14,
         auto_save: true,
-        show_line_numbers: true,
-        word_wrap: true,
         sync_scroll: true
       },
 
@@ -104,7 +102,15 @@ const useAppStore = create(
       // 获取文档统计信息
       getDocumentStats: () => {
         const { content } = get().currentDocument;
-        const wordCount = content.split(/\s+/).filter(word => word.length > 0).length;
+        // 统计汉字（匹配中文字符，包括中文标点）
+        const chineseRegex = /[\u4e00-\u9fa5]/g;
+        const chineseCount = (content.match(chineseRegex) || []).length;
+        
+        // 统计英文单词（匹配连续的英文字母，包含连字符等情况）
+        const englishWordRegex = /\b[a-zA-Z]+(?:[-'][a-zA-Z]+)*\b/g;
+        const englishWordCount = (content.match(englishWordRegex) || []).length;
+
+        const wordCount = chineseCount + englishWordCount;
         const characterCount = content.length;
         const lineCount = content.split('\n').length;
         const readingTime = Math.ceil(wordCount / 200);
